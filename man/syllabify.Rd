@@ -12,6 +12,28 @@ or a string with labels separated by spaces}
 
 \item{alaska_rule}{Don't maximize onset on lax vowel + s sequences}
 }
+\value{
+Returns a data frame with the following columns
+\describe{
+  \item{syll}{A numeric index for each syllable}
+  \item{part}{What part of the syllable each phone blongs to}
+  \item{phone}{The phone label from the transcription}
+  \item{stress}{The syllable stress}
+}
+}
 \description{
 This will take a transcription as input, and return it as a data frame.
+}
+\examples{
+# String input
+syllabify("AO0 S T R EY1 L Y AH0")
+
+# Vector input
+syllabify(c("AO0", "S", "T", "R", "EY1", "L", "Y", "AH0"))
+
+# Hiatus
+syllabify("HH AY0 EY1 T AH0 S")
+
+# Deficient transcriptions (has warning)
+syllabify(c("M"))
 }

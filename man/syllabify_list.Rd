@@ -12,6 +12,24 @@ or a string with labels separated by spaces}
 
 \item{alaska_rule}{Don't maximize onset on lax vowel + s sequences}
 }
+\value{
+A with one value per syllable. Each value is a list, with three
+values: onset, nucleus, coda. Each will contain a vector of the phones
+which belong to each consitntuent part of the syllable. Any empty
+constituent parts will have the value \code{character(0)}
+}
 \description{
 This will take a transcription as input, and return it as a list.
+}
+\examples{
+# String input
+syllabify_list("AO0 S T R EY1 L Y AH0")
+
+# Vector input
+syllabify_list(c("AO0", "S", "T", "R", "EY1", "L", "Y", "AH0"))
+# Hiatus
+syllabify_list("HH AY0 EY1 T AH0 S")
+
+# Deficient transcriptions (has warning)
+syllabify_list(c("M"))
 }

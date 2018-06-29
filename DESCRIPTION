@@ -10,3 +10,9 @@ LazyData: true
 RoxygenNote: 6.0.1
 Suggests: testthat
 License: GPL-3 + file LICENSE
+Imports:
+   dplyr,
+   purrr,
+   stringr,
+   tibble, 
+   tidyr

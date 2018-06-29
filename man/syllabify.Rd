@@ -2,10 +2,16 @@
 % Please edit documentation in R/syllabify.R
 \name{syllabify}
 \alias{syllabify}
-\title{syllabify}
+\title{Syllabify}
 \usage{
 syllabify(pron, alaska_rule = T)
 }
+\arguments{
+\item{pron}{The CMU dictionary pronunciation, either as a vector,
+or a string with labels separated by spaces}
+
+\item{alaska_rule}{Don't maximize onset on lax vowel + s sequences}
+}
 \description{
-syllabify
+This will take a transcription as input, and return it as a data frame.
 }

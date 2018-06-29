@@ -1,5 +1,42 @@
-#' syllabify to a list
+#' Syllabify
 #'
+#' This will take a transcription as input, and return it as a data frame.
+#'
+#' @param pron The CMU dictionary pronunciation, either as a vector,
+#' or a string with labels separated by spaces
+#' @param alaska_rule Don't maximize onset on lax vowel + s sequences
+#'
+#' @import purrr
+#' @import tibble
+#' @import dplyr
+#' @import tidyr
+#'
+#' @export
+
+syllabify <- function(pron, alaska_rule = T){
+  syll_list <- syllabify_list(pron, alaska_rule)
+  output <- syll_list %>%
+    map(~.x %>% keep(~length(.x)>0)) %>%
+    map(~.x %>% map(~data_frame(phone = .x)))%>%
+    set_names(nm= seq_along(.)) %>%
+    map(~.x %>% bind_rows(.id = "part"))%>%
+    dplyr::bind_rows(.id = "syll") %>%
+    group_by(syll)%>%
+    mutate(stress = gsub(".*([0-9])", "\\1", phone))%>%
+    mutate(stress = case_when(part == "nucleus" ~ stress))%>%
+    fill(stress)%>%
+    fill(stress, .direction = "up") %>%
+    ungroup()
+  return(output)
+}
+
+#' Syllabify to a list
+#'
+#' This will take a transcription as input, and return it as a list.
+#'
+#' @param pron The CMU dictionary pronunciation, either as a vector,
+#' or a string with labels separated by spaces
+#' @param alaska_rule Don't maximize onset on lax vowel + s sequences
 #' @import purrr
 #' @export
 
@@ -82,7 +119,6 @@ syllabify_list <- function(pron, alaska_rule = TRUE){
   return(output)
 }
 
-
 #' make onset indices
 #'
 make_onset_indices <- function(nuclei_indices){
@@ -101,31 +137,6 @@ make_onset_indices <- function(nuclei_indices){
       }
     }
   }
-  return(output)
-}
-
-
-#' syllabify
-#' @import purrr
-#' @import tibble
-#' @import dplyr
-#' @import tidyr
-#'
-#' @export
-syllabify <- function(pron, alaska_rule = T){
-  syll_list <- syllabify_list(pron, alaska_rule)
-  output <- syll_list %>%
-              map(~.x %>% keep(~length(.x)>0)) %>%
-              map(~.x %>% map(~data_frame(phone = .x)))%>%
-              set_names(nm= seq_along(.)) %>%
-              map(~.x %>% bind_rows(.id = "part"))%>%
-              dplyr::bind_rows(.id = "syll") %>%
-              group_by(syll)%>%
-              mutate(stress = gsub(".*([0-9])", "\\1", phone))%>%
-              mutate(stress = case_when(part == "nucleus" ~ stress))%>%
-              fill(stress)%>%
-              fill(stress, .direction = "up") %>%
-              ungroup()
   return(output)
 }
 

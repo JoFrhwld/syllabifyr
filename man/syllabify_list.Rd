@@ -2,10 +2,16 @@
 % Please edit documentation in R/syllabify.R
 \name{syllabify_list}
 \alias{syllabify_list}
-\title{syllabify to a list}
+\title{Syllabify to a list}
 \usage{
 syllabify_list(pron, alaska_rule = TRUE)
 }
+\arguments{
+\item{pron}{The CMU dictionary pronunciation, either as a vector,
+or a string with labels separated by spaces}
+
+\item{alaska_rule}{Don't maximize onset on lax vowel + s sequences}
+}
 \description{
-syllabify to a list
+This will take a transcription as input, and return it as a list.
 }

@@ -43,4 +43,32 @@ O3 = list(c('S', 'T', 'R'),
           c('T', 'R', 'W'))
 
 
+#' CMU labels
 
+cmu_labels <- c(
+  VOWELS,
+  "B",
+  "CH",
+  "D",
+  "DH",
+  "F",
+  "G",
+  "HH",
+  "JH",
+  "K",
+  "L",
+  "M",
+  "N",
+  "NG",
+  "P",
+  "R",
+  "S",
+  "SH",
+  "T",
+  "TH",
+  "V",
+  "W",
+  "Y",
+  "Z",
+  "ZH"
+)

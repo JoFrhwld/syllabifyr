@@ -1,69 +1,85 @@
-#' syllabify
+#' syllabify to a list
 #'
 #' @import purrr
+#' @export
 
 syllabify_list <- function(pron, alaska_rule = TRUE){
 
+  pron <- pronunciation_check_cmu(pron)
   nsyl <- sum(pron %in% VOWELS)
-  nuclei <- vector("list", nsyl)
-  onsets <- vector("list", nsyl)
-  codas <- vector("list", nsyl)
+  if(nsyl < 1){
+    warning(paste0("transcription '", paste(pron, collapse = " "), "' is defective"))
+    nuclei <- list(character(0))
+    onsets <- list(pron)
+    codas  <- list(character(0))
+  }else{
+    nuclei <- vector("list", nsyl)%>%
+                map(~character(0))
+    onsets <- vector("list", nsyl) %>%
+                map(~character(0))
+    codas  <- vector("list", nsyl) %>%
+                map(~character(0))
 
-  phon_indices <- seq_along(pron)
-  vowel_indices <- which(pron %in% VOWELS)
-  # here, incorporate defective transcriptions
-  onset_indices <- make_onset_indices(vowel_indices)
+    phon_indices <- seq_along(pron)
+    vowel_indices <- which(pron %in% VOWELS)
 
-  for(i in seq_along(nuclei)){
-    nuclei[[i]] <- pron[vowel_indices[i]]
-    onsets[[i]] <- pron[onset_indices[[i]]]
-  }
-  if(length(pron) > max(vowel_indices)){
-    codas[[length(codas)]] <- pron[(vowel_indices[length(vowel_indices)] + 1):length(pron)]
-  }
 
-  if(length(nuclei)>1){
-    for(i in seq_along(nuclei)[-1]){
-      coda = c()
-      if(length(onsets[[i]] > 1 &
-                  onsets[[i]][1] == "R")){
-        nuclei[[i-1]] <- c(nuclei[[i-1]], "R")
-        onsets[[i]] <- onsets[[i]][-1]
-      }
+    onset_indices <- make_onset_indices(vowel_indices)
 
-      if(length(onsets[[i]]) > 2 &
-          onsets[[length(onsets)]] == "Y"){
-        nuclei[[i]] <- c("Y", nuclei[[o]])
-        onsets[[i]] <- onsets[[i]][-length(onsets[[i]])]
-      }
+    for(i in seq_along(nuclei)){
+      nuclei[[i]] <- pron[vowel_indices[i]]
+      onsets[[i]] <- pron[onset_indices[[i]]]
+    }
+    if(length(pron) > max(vowel_indices)){
+      codas[[length(codas)]] <- pron[(vowel_indices[length(vowel_indices)] + 1):length(pron)]
+    }
 
-      if(length(onsets[[i]]) > 1 &
-          alaska_rule &
-          nuclei[[i-1]][length(nuclei[[i-1]])] %in% syllabify::SLAX &
-          onsets[[i]][1] == "S"){
-          coda <- c(coda, "S")
-          onsets[[i]] <- onsets[[i]][-1]
-      }
-
-      depth = 1
-      if(length(onsets[[i]]) > 1){
-        two_onset <- map(O2, ~all(tail(onsets[[i]], 2) %in% .x)) %>% simplify()
-        if(any(two_onset)){
-          three_onset <- map(O3, ~all(tail(onsets[[i]], 3) %in% .x)) %>% simplify()
-          depth <- ifelse(three_onset, 3, 2)
-        }
-      }
-      if(length(onsets[[i]])-depth > 0){
-        for(j in seq(length(onsets[[i]])-depth)){
-          coda <- c(coda, onsets[[i]][1])
+    if(length(nuclei)>1){
+      for(i in seq_along(nuclei)[-1]){
+        coda = character(0)
+        if(length(onsets[[i]]) > 1 &
+                    onsets[[i]][1] == "R"){
+          coda[[i-1]] <- c(coda[[i-1]], "R")
           onsets[[i]] <- onsets[[i]][-1]
         }
+
+        if(length(onsets[[i]]) > 2){
+          if(onsets[[i]][length(onsets[[i]])] == "Y"){
+            nuclei[[i]] <- c("Y", nuclei[[i]])
+            onsets[[i]] <- onsets[[i]][-length(onsets[[i]])]
+          }
+        }
+
+        if(length(onsets[[i]]) > 1 &
+            alaska_rule &
+            nuclei[[i-1]][length(nuclei[[i-1]])] %in% SLAX &
+            onsets[[i]][1] == "S"){
+            coda <- c(coda, "S")
+            onsets[[i]] <- onsets[[i]][-1]
+        }
+
+        depth = 1
+        if(length(onsets[[i]]) > 1){
+          two_onset <- map(O2, ~all(tail(onsets[[i]], 2) %in% .x)) %>% simplify()
+          if(any(two_onset)){
+            three_onset <- map(O3, ~all(tail(onsets[[i]], 3) %in% .x)) %>% simplify()
+            depth <- ifelse(any(three_onset), 3, 2)
+          }
+        }
+        if((length(onsets[[i]])-depth) > 0){
+          for(j in seq(length(onsets[[i]])-depth)){
+            coda <- c(coda, onsets[[i]][1])
+            onsets[[i]] <- onsets[[i]][-1]
+          }
+        }
+        codas[[i-1]] <- coda
       }
-      codas[[i-1]] <- coda
     }
   }
 
-  return(list(onsets, nuclei, codas))
+  output <- transpose(list(onsets, nuclei, codas)) %>%
+                map(~.x %>% set_names(c("onset", "nucleus", "coda")))
+  return(output)
 }
 
 
@@ -81,9 +97,49 @@ make_onset_indices <- function(nuclei_indices){
       if(nuclei_indices[[i]] - nuclei_indices[[i-1]] > 1){
         output[[i]] <- (nuclei_indices[[i-1]]+1):(nuclei_indices[[i]]-1)
       }else{
-        output[[i]] <- NULL
+        output[[i]] <- numeric(0)
       }
     }
   }
   return(output)
+}
+
+
+#' syllabify
+#' @import purrr
+#' @import tibble
+#' @import dplyr
+#' @import tidyr
+#'
+#' @export
+syllabify <- function(pron, alaska_rule = T){
+  syll_list <- syllabify_list(pron, alaska_rule)
+  output <- syll_list %>%
+              map(~.x %>% keep(~length(.x)>0)) %>%
+              map(~.x %>% map(~data_frame(phone = .x)))%>%
+              set_names(nm= seq_along(.)) %>%
+              map(~.x %>% bind_rows(.id = "part"))%>%
+              dplyr::bind_rows(.id = "syll") %>%
+              group_by(syll)%>%
+              mutate(stress = gsub(".*([0-9])", "\\1", phone))%>%
+              mutate(stress = case_when(part == "nucleus" ~ stress))%>%
+              fill(stress)%>%
+              fill(stress, .direction = "up") %>%
+              ungroup()
+  return(output)
+}
+
+#' CMU pronunciaton check
+#' @importFrom stringr str_split
+
+pronunciation_check_cmu <- function(pron){
+  if(length(pron) == 1){
+    pron <- str_split(pron, " ")[[1]]
+  }
+  if(!all(pron %in% cmu_labels)){
+    bad_pron <- pron[which(!pron %in% cmu_labels)]
+    stop(paste0("Not a licit CMU transcription label: ",
+                paste(bad_pron, collapse = ", ")))
+  }
+  return(pron)
 }

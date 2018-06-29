@@ -2,10 +2,10 @@
 % Please edit documentation in R/syllabify.R
 \name{syllabify_list}
 \alias{syllabify_list}
-\title{syllabify}
+\title{syllabify to a list}
 \usage{
 syllabify_list(pron, alaska_rule = TRUE)
 }
 \description{
-syllabify
+syllabify to a list
 }

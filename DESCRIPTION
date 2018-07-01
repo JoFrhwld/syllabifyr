@@ -8,7 +8,9 @@ Description: Implements tidy syllabificiation of transcription. Based on @kylebg
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
 License: GPL-3 + file LICENSE
 Imports:
    dplyr,
@@ -16,3 +18,4 @@ Imports:
    stringr,
    tibble, 
    tidyr
+VignetteBuilder: knitr

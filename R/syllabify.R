@@ -35,15 +35,19 @@
 
 syllabify <- function(pron, alaska_rule = T){
   syll_list <- syllabify_list(pron, alaska_rule)
+  phone <- quo(phone)
+  syll <- quo(phone)
+  stress <- quo(stress)
+  nsyl <- length(syll_list)
   output <- syll_list %>%
     map(~.x %>% keep(~length(.x) > 0)) %>%
     map(~.x %>% map(~ data_frame(phone = .x))) %>%
-    set_names(seq_along(.)) %>%
+    set_names(seq(nsyl)) %>%
     map(~.x %>% bind_rows(.id = "part")) %>%
     dplyr::bind_rows(.id = "syll") %>%
-    mutate(syll = as.numeric(syll)) %>%
+    mutate(syll = as.numeric(!!syll)) %>%
     group_by(syll) %>%
-    mutate(stress = gsub(".*([0-9])", "\\1", phone),
+    mutate(stress = gsub(".*([0-9])", "\\1", !!phone),
            stress = case_when(stress %in% c("0", "1", "2") ~ stress)) %>%
     fill(stress) %>%
     fill(stress, .direction = "up") %>%

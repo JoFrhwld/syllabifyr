@@ -4,8 +4,14 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+## ------------------------------------------------------------------------
+install.packages(c("devtools",
+                   "tidyverse"),
+                 repos = "https://cloud.r-project.org/")
+
 ## ----eval = T------------------------------------------------------------
-devtools::install_github("patrickreidy/textgRid")
+library(devtools)
+install_github("patrickreidy/textgRid")
 
 ## ------------------------------------------------------------------------
 library(textgRid)

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 This vignette uses the `textgRid` package from Patrick Reidy.
 
-```{r eval = F}
+```{r eval = T}
 devtools::install_github("patrickreidy/textgRid")
 ```
 

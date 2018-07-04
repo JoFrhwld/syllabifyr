@@ -9,3 +9,4 @@ pronunciation_check_cmu(pron)
 \description{
 CMU pronunciaton check
 }
+\keyword{internal}

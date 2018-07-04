@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Josef Fruehwald" />
+
+<meta name="date" content="2018-07-04" />
+
+<title>Syllabifying a Force Aligned TextGrid</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Syllabifying a Force Aligned TextGrid</h1>
+<h4 class="author"><em>Josef Fruehwald</em></h4>
+<h4 class="date"><em>2018-07-04</em></h4>
+
+
+
+<p>This is a little vignette for how to syllabify the output of a TextGrid from <a href="https://github.com/JoFrhwld/FAVE">FAVE-align</a>, and what you might use it for.</p>
+<p>This vignette uses the <code>textgRid</code> package from Patrick Reidy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;patrickreidy/textgRid&quot;</span>)
+<span class="co">#&gt; Downloading GitHub repo patrickreidy/textgRid@master</span>
+<span class="co">#&gt; from URL https://api.github.com/repos/patrickreidy/textgRid/zipball/master</span>
+<span class="co">#&gt; Installing textgRid</span>
+<span class="co">#&gt; '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \</span>
+<span class="co">#&gt;   --no-environ --no-save --no-restore --quiet CMD INSTALL  \</span>
+<span class="co">#&gt;   '/private/var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T/RtmpYd0Vkt/devtoolsb46e50d779bf/patrickreidy-textgRid-dd151e5'  \</span>
+<span class="co">#&gt;   --library='/Library/Frameworks/R.framework/Versions/3.5/Resources/library'  \</span>
+<span class="co">#&gt;   --install-tests</span>
+<span class="co">#&gt; </span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(textgRid)
+<span class="kw">library</span>(syllabify)
+<span class="kw">library</span>(dplyr)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'dplyr'</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
+<span class="kw">library</span>(purrr)
+<span class="kw">library</span>(tidyr)</code></pre></div>
+<p>I read a brief word list based on the examples from Turton (2017), who was studying /l/ darkening. I then transcribed and force aligned it. We can read it in as a data frame like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tg_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;l_reading.TextGrid&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;syllabify&quot;</span>)
+tg_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">TextGrid</span>(tg_path))
+<span class="kw">head</span>(tg_df)
+<span class="co">#&gt;   TierNumber                TierName     TierType Index StartTime EndTime</span>
+<span class="co">#&gt; 1          1 Josef Fruehwald - phone IntervalTier     1     0.000   0.883</span>
+<span class="co">#&gt; 2          1 Josef Fruehwald - phone IntervalTier     2     0.883   0.933</span>
+<span class="co">#&gt; 3          1 Josef Fruehwald - phone IntervalTier     3     0.933   1.093</span>
+<span class="co">#&gt; 4          1 Josef Fruehwald - phone IntervalTier     4     1.093   1.263</span>
+<span class="co">#&gt; 5          1 Josef Fruehwald - phone IntervalTier     5     1.263   1.323</span>
+<span class="co">#&gt; 6          1 Josef Fruehwald - phone IntervalTier     6     1.323   1.343</span>
+<span class="co">#&gt;   Label</span>
+<span class="co">#&gt; 1    sp</span>
+<span class="co">#&gt; 2    sp</span>
+<span class="co">#&gt; 3     L</span>
+<span class="co">#&gt; 4   IY1</span>
+<span class="co">#&gt; 5     P</span>
+<span class="co">#&gt; 6    sp</span></code></pre></div>
+<p>We can tidy up the TierName column a bit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tg_df &lt;-<span class="st"> </span>tg_df <span class="op">%&gt;%</span>
+<span class="st">            </span><span class="kw">select</span>(<span class="op">-</span>TierType)<span class="op">%&gt;%</span>
+<span class="st">            </span><span class="kw">separate</span>(TierName, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;speaker&quot;</span>, <span class="st">&quot;tier_type&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; - &quot;</span>)</code></pre></div>
+<div id="the-syllabification-workflow---in-prose" class="section level2">
+<h2>The Syllabification Workflow - In Prose</h2>
+<p>I’ll briefly describe, in prose, the workflow. If you feel like you learn better from just looking at the code, skip a head to that. If there’s something confusing in the code, double check back here.</p>
+<ol style="list-style-type: decimal">
+<li>Separate the textgrid into separate phone and word textgrids with properly named columns.</li>
+<li><code>left_join()</code> the word data frame onto the phone data frame by start time. This will give the first phone in the word all of the word metadata, with NA for the rest. We can then use <code>fill()</code> to fully associate each phone with its word metadata.</li>
+<li><code>group_by()</code> the word metadata, and then <code>nest()</code> the phone data. This gives us a data frame with one row per word, and a list column of tibbles which have all of the phone metadata.</li>
+<li><code>map()</code> <code>syllabify()</code> onto the phone column of each phone tibble.</li>
+<li><code>bind_cols()</code> the resulting syllabification info back onto the original phone tibbles.</li>
+<li><code>unnest()</code> the phone + syllabification tibbles for the whole shebang.</li>
+</ol>
+</div>
+<div id="the-syllabification-workflow---in-code" class="section level2">
+<h2>The Syllabification Workflow - In Code</h2>
+<p>Separate into phone and word textgrids, renaming the relevant columns. <strong>Note</strong> It’s important to keep the StartTime column as-is for the next joining stage.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phon_tier &lt;-<span class="st"> </span>tg_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">filter</span>(tier_type <span class="op">==</span><span class="st"> &quot;phone&quot;</span>)<span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">rename</span>(<span class="dt">phone_index =</span> Index,
+                       <span class="dt">phone_end =</span> EndTime,
+                       <span class="dt">phone =</span> Label)<span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">mutate</span>(<span class="dt">phone_start =</span> StartTime)
+word_tier &lt;-<span class="st"> </span>tg_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(tier_type <span class="op">==</span><span class="st"> &quot;word&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">filter</span>(tier_type <span class="op">==</span><span class="st"> &quot;word&quot;</span>)<span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">rename</span>(<span class="dt">word_index =</span> Index,
+                       <span class="dt">word_end =</span> EndTime,
+                       <span class="dt">word =</span> Label)<span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">mutate</span>(<span class="dt">word_start =</span> StartTime)<span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">select</span>(<span class="op">-</span>tier_type, <span class="op">-</span>TierNumber)</code></pre></div>
+<p><code>left_join()</code> the word data frame onto the phones data frame. You can see all of the rows except for the first phone in each word is NA.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phon_tier <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(word_tier)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt; Joining, by = c(&quot;speaker&quot;, &quot;StartTime&quot;)</span>
+<span class="co">#&gt;   TierNumber         speaker tier_type phone_index StartTime phone_end</span>
+<span class="co">#&gt; 1          1 Josef Fruehwald     phone           1     0.000     0.883</span>
+<span class="co">#&gt; 2          1 Josef Fruehwald     phone           2     0.883     0.933</span>
+<span class="co">#&gt; 3          1 Josef Fruehwald     phone           3     0.933     1.093</span>
+<span class="co">#&gt; 4          1 Josef Fruehwald     phone           4     1.093     1.263</span>
+<span class="co">#&gt; 5          1 Josef Fruehwald     phone           5     1.263     1.323</span>
+<span class="co">#&gt; 6          1 Josef Fruehwald     phone           6     1.323     1.343</span>
+<span class="co">#&gt;   phone phone_start word_index word_end word word_start</span>
+<span class="co">#&gt; 1    sp       0.000          1    0.883   sp      0.000</span>
+<span class="co">#&gt; 2    sp       0.883          2    0.933   sp      0.883</span>
+<span class="co">#&gt; 3     L       0.933          3    1.323 LEAP      0.933</span>
+<span class="co">#&gt; 4   IY1       1.093         NA       NA &lt;NA&gt;         NA</span>
+<span class="co">#&gt; 5     P       1.263         NA       NA &lt;NA&gt;         NA</span>
+<span class="co">#&gt; 6    sp       1.323          4    1.343   sp      1.323</span></code></pre></div>
+<p><code>fill()</code> on the word metadata will fill down the word metadata within each word.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phon_tier <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(word_tier)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">fill</span>(<span class="kw">starts_with</span>(<span class="st">&quot;word&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt; Joining, by = c(&quot;speaker&quot;, &quot;StartTime&quot;)</span>
+<span class="co">#&gt;   TierNumber         speaker tier_type phone_index StartTime phone_end</span>
+<span class="co">#&gt; 1          1 Josef Fruehwald     phone           1     0.000     0.883</span>
+<span class="co">#&gt; 2          1 Josef Fruehwald     phone           2     0.883     0.933</span>
+<span class="co">#&gt; 3          1 Josef Fruehwald     phone           3     0.933     1.093</span>
+<span class="co">#&gt; 4          1 Josef Fruehwald     phone           4     1.093     1.263</span>
+<span class="co">#&gt; 5          1 Josef Fruehwald     phone           5     1.263     1.323</span>
+<span class="co">#&gt; 6          1 Josef Fruehwald     phone           6     1.323     1.343</span>
+<span class="co">#&gt;   phone phone_start word_index word_end word word_start</span>
+<span class="co">#&gt; 1    sp       0.000          1    0.883   sp      0.000</span>
+<span class="co">#&gt; 2    sp       0.883          2    0.933   sp      0.883</span>
+<span class="co">#&gt; 3     L       0.933          3    1.323 LEAP      0.933</span>
+<span class="co">#&gt; 4   IY1       1.093          3    1.323 LEAP      0.933</span>
+<span class="co">#&gt; 5     P       1.263          3    1.323 LEAP      0.933</span>
+<span class="co">#&gt; 6    sp       1.323          4    1.343   sp      1.323</span></code></pre></div>
+<p>This stage does some data enrichment, incuding what the next phone is (regardless of word boundary), then for where in the word each phone appears.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phon_tier <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(word_tier)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">fill</span>(<span class="kw">starts_with</span>(<span class="st">&quot;word&quot;</span>))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">next_phone =</span> <span class="kw">lead</span>(phone)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(word, word_index, word_start, word_end)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phone_n =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>(),
+         <span class="dt">position =</span> <span class="kw">case_when</span>(<span class="kw">n</span>()<span class="op">==</span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;coextensive&quot;</span>,
+                              phone_n <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;initial&quot;</span>,
+                              phone_n <span class="op">==</span><span class="st"> </span><span class="kw">n</span>() <span class="op">~</span><span class="st"> &quot;final&quot;</span>,
+                              <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;internal&quot;</span>))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt; Joining, by = c(&quot;speaker&quot;, &quot;StartTime&quot;)</span>
+<span class="co">#&gt; # A tibble: 6 x 15</span>
+<span class="co">#&gt; # Groups:   word, word_index, word_start, word_end [4]</span>
+<span class="co">#&gt;   TierNumber speaker       tier_type phone_index StartTime phone_end phone</span>
+<span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;           &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;</span>
+<span class="co">#&gt; 1          1 Josef Fruehw… phone               1     0         0.883 sp   </span>
+<span class="co">#&gt; 2          1 Josef Fruehw… phone               2     0.883     0.933 sp   </span>
+<span class="co">#&gt; 3          1 Josef Fruehw… phone               3     0.933     1.09  L    </span>
+<span class="co">#&gt; 4          1 Josef Fruehw… phone               4     1.09      1.26  IY1  </span>
+<span class="co">#&gt; 5          1 Josef Fruehw… phone               5     1.26      1.32  P    </span>
+<span class="co">#&gt; 6          1 Josef Fruehw… phone               6     1.32      1.34  sp   </span>
+<span class="co">#&gt; # ... with 8 more variables: phone_start &lt;dbl&gt;, word_index &lt;int&gt;,</span>
+<span class="co">#&gt; #   word_end &lt;dbl&gt;, word &lt;chr&gt;, word_start &lt;dbl&gt;, next_phone &lt;chr&gt;,</span>
+<span class="co">#&gt; #   phone_n &lt;int&gt;, position &lt;chr&gt;</span></code></pre></div>
+<p>Next, we nest all of the phone data, and filter out the small pauses (they can’t be syllabified).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">word_nested &lt;-<span class="st"> </span>phon_tier <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(word_tier) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">fill</span>(<span class="kw">starts_with</span>(<span class="st">&quot;word&quot;</span>))<span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">next_phone =</span> <span class="kw">lead</span>(phone)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">group_by</span>(word, word_index, word_start, word_end) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">phone_n =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>(),
+               <span class="dt">position =</span> <span class="kw">case_when</span>(<span class="kw">n</span>()<span class="op">==</span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;coextensive&quot;</span>,
+                                    phone_n <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;initial&quot;</span>,
+                                    phone_n <span class="op">==</span><span class="st"> </span><span class="kw">n</span>() <span class="op">~</span><span class="st"> &quot;final&quot;</span>,
+                                    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;internal&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">nest</span>()<span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;[A-Z]&quot;</span>, word))
+<span class="co">#&gt; Joining, by = c(&quot;speaker&quot;, &quot;StartTime&quot;)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(word_nested)
+<span class="co">#&gt; # A tibble: 6 x 5</span>
+<span class="co">#&gt;   word    word_index word_start word_end data             </span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;list&gt;           </span>
+<span class="co">#&gt; 1 LEAP             3      0.933     1.32 &lt;tibble [3 × 11]&gt;</span>
+<span class="co">#&gt; 2 BELIEVE          7      1.99      2.64 &lt;tibble [5 × 11]&gt;</span>
+<span class="co">#&gt; 3 FREELY          10      3.27      4.02 &lt;tibble [5 × 11]&gt;</span>
+<span class="co">#&gt; 4 HELIX           13      4.54      5.44 &lt;tibble [6 × 11]&gt;</span>
+<span class="co">#&gt; 5 HEALING         16      5.92      6.58 &lt;tibble [5 × 11]&gt;</span>
+<span class="co">#&gt; 6 HEAL            20      7.64      8.29 &lt;tibble [3 × 11]&gt;</span></code></pre></div>
+<p>Now, we syllabify the phone tibbles, and <code>bind_cols()</code> the two together. Your first instinct here might be to <code>join_*()</code>, but don’t.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">syllabified &lt;-<span class="st"> </span>word_nested <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">syll_df =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="kw">syllabify</span>(.x<span class="op">$</span>phone) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>phone)),
+           <span class="dt">joined =</span> <span class="kw">map2</span>(data,
+                         syll_df,
+                         bind_cols))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">unnest</span>(joined)
+
+<span class="kw">head</span>(syllabified)
+<span class="co">#&gt; # A tibble: 6 x 18</span>
+<span class="co">#&gt;   word    word_index word_start word_end TierNumber speaker      tier_type</span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt;      &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;    </span>
+<span class="co">#&gt; 1 LEAP             3      0.933     1.32          1 Josef Frueh… phone    </span>
+<span class="co">#&gt; 2 LEAP             3      0.933     1.32          1 Josef Frueh… phone    </span>
+<span class="co">#&gt; 3 LEAP             3      0.933     1.32          1 Josef Frueh… phone    </span>
+<span class="co">#&gt; 4 BELIEVE          7      1.99      2.64          1 Josef Frueh… phone    </span>
+<span class="co">#&gt; 5 BELIEVE          7      1.99      2.64          1 Josef Frueh… phone    </span>
+<span class="co">#&gt; 6 BELIEVE          7      1.99      2.64          1 Josef Frueh… phone    </span>
+<span class="co">#&gt; # ... with 11 more variables: phone_index &lt;int&gt;, StartTime &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   phone_end &lt;dbl&gt;, phone &lt;chr&gt;, phone_start &lt;dbl&gt;, next_phone &lt;chr&gt;,</span>
+<span class="co">#&gt; #   phone_n &lt;int&gt;, position &lt;chr&gt;, syll &lt;chr&gt;, part &lt;chr&gt;, stress &lt;chr&gt;</span></code></pre></div>
+</div>
+<div id="why" class="section level2">
+<h2>Why?</h2>
+<p>The original motivation for Turton (2017) was to look at how /l/ was realized in different syllabic contexts. We can filter out just the /l/s now to see where they show up.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">syllabified <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(phone <span class="op">==</span><span class="st"> &quot;L&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(word, phone, position, part, stress, syll, next_phone)
+<span class="co">#&gt; # A tibble: 8 x 7</span>
+<span class="co">#&gt;   word    phone position part  stress syll  next_phone</span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 LEAP    L     initial  onset 1      1     IY1       </span>
+<span class="co">#&gt; 2 BELIEVE L     internal onset 1      2     IY1       </span>
+<span class="co">#&gt; 3 FREELY  L     internal onset 0      2     IY0       </span>
+<span class="co">#&gt; 4 HELIX   L     internal onset 0      2     IH0       </span>
+<span class="co">#&gt; 5 HEALING L     internal onset 0      2     IH0       </span>
+<span class="co">#&gt; 6 HEAL    L     final    coda  1      1     sp        </span>
+<span class="co">#&gt; 7 HEAL    L     final    coda  1      1     AH0       </span>
+<span class="co">#&gt; 8 PEEL    L     final    coda  1      1     B</span></code></pre></div>
+<hr />
+<p>Turton, D 2017 Categorical or gradient? An ultrasound investigation of /l/-darkening and vocalization in varieties of English. Laboratory Phonology: Journal of the Association for Laboratory Phonology 8(1): 13, pp. 1–31, DOI: <a href="https://doi.org/10.5334/labphon.35" class="uri">https://doi.org/10.5334/labphon.35</a></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

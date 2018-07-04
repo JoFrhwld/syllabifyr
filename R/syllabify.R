@@ -38,12 +38,13 @@ syllabify <- function(pron, alaska_rule = T){
   output <- syll_list %>%
     map(~.x %>% keep(~length(.x) > 0)) %>%
     map(~.x %>% map(~ data_frame(phone = .x))) %>%
-    set_names(nm = seq_along(.)) %>%
+    set_names(seq_along(.)) %>%
     map(~.x %>% bind_rows(.id = "part")) %>%
     dplyr::bind_rows(.id = "syll") %>%
+    mutate(syll = as.numeric(syll)) %>%
     group_by(syll) %>%
-    mutate(stress = gsub(".*([0-9])", "\\1", phone)) %>%
-    mutate(stress = case_when(part == "nucleus" ~ stress)) %>%
+    mutate(stress = gsub(".*([0-9])", "\\1", phone),
+           stress = case_when(stress %in% c("0", "1", "2") ~ stress)) %>%
     fill(stress) %>%
     fill(stress, .direction = "up") %>%
     ungroup()
@@ -114,7 +115,7 @@ syllabify_list <- function(pron, alaska_rule = TRUE){
         coda <- character(0)
         if (length(onsets[[i]]) > 1 &
                     onsets[[i]][1] == "R"){
-          coda[[i - 1]] <- c(coda[[i - 1]], "R")
+          codas[[i - 1]] <- c(codas[[i - 1]], "R")
           onsets[[i]] <- onsets[[i]][-1]
         }
 
@@ -159,7 +160,7 @@ syllabify_list <- function(pron, alaska_rule = TRUE){
 }
 
 #' make onset indices
-#'
+#' @keywords internal
 make_onset_indices <- function(nuclei_indices){
   output <- vector("list", length(nuclei_indices))
   if (nuclei_indices[1] == 1){
@@ -181,10 +182,11 @@ make_onset_indices <- function(nuclei_indices){
 
 #' CMU pronunciaton check
 #' @importFrom stringr str_split
+#' @keywords internal
 
 pronunciation_check_cmu <- function(pron){
   if (length(pron) == 1){
-    pron <- str_split(pron, " ")[[1]]
+    pron <- str_split(pron, "\\s+")[[1]]
   }
   if (!all(pron %in% cmu_labels)){
     bad_pron <- pron[which(!pron %in% cmu_labels)]

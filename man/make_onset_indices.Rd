@@ -9,3 +9,4 @@ make_onset_indices(nuclei_indices)
 \description{
 make onset indices
 }
+\keyword{internal}

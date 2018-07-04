@@ -21,7 +21,8 @@ knitr::opts_chunk$set(
 This vignette uses the `textgRid` package from Patrick Reidy.
 
 ```{r eval = T}
-devtools::install_github("patrickreidy/textgRid")
+library(devtools)
+install_github("patrickreidy/textgRid")
 ```
 
 ```{r}

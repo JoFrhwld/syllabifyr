@@ -20,6 +20,13 @@ knitr::opts_chunk$set(
 
 This vignette uses the `textgRid` package from Patrick Reidy.
 
+```{r}
+install.packages(c("devtools",
+                   "tidyverse"),
+                 repos = "https://cloud.r-project.org/")
+```
+
+
 ```{r eval = T}
 library(devtools)
 install_github("patrickreidy/textgRid")

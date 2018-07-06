@@ -12,7 +12,7 @@
 
 <meta name="author" content="Josef Fruehwald" />
 
-<meta name="date" content="2018-07-04" />
+<meta name="date" content="2018-07-06" />
 
 <title>Syllabifying a Force Aligned TextGrid</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Syllabifying a Force Aligned TextGrid</h1>
 <h4 class="author"><em>Josef Fruehwald</em></h4>
-<h4 class="date"><em>2018-07-04</em></h4>
+<h4 class="date"><em>2018-07-06</em></h4>
 
 
 
@@ -81,7 +81,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
                  <span class="dt">repos =</span> <span class="st">&quot;https://cloud.r-project.org/&quot;</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T//RtmpnIlDxq/downloaded_packages</span></code></pre></div>
+<span class="co">#&gt;  /var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T//RtmpF3zRzC/downloaded_packages</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&quot;patrickreidy/textgRid&quot;</span>)
 <span class="co">#&gt; Downloading GitHub repo patrickreidy/textgRid@master</span>
@@ -89,12 +89,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt; Installing textgRid</span>
 <span class="co">#&gt; '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \</span>
 <span class="co">#&gt;   --no-environ --no-save --no-restore --quiet CMD INSTALL  \</span>
-<span class="co">#&gt;   '/private/var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T/RtmpnIlDxq/devtoolscd084cf9be44/patrickreidy-textgRid-dd151e5'  \</span>
+<span class="co">#&gt;   '/private/var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T/RtmpF3zRzC/devtoolse8c5d6b2461/patrickreidy-textgRid-dd151e5'  \</span>
 <span class="co">#&gt;   --library='/Library/Frameworks/R.framework/Versions/3.5/Resources/library'  \</span>
 <span class="co">#&gt;   --install-tests</span>
 <span class="co">#&gt; </span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(textgRid)
-<span class="kw">library</span>(syllabify)
+<span class="kw">library</span>(syllabifyr)
 <span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>

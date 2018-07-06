@@ -1,4 +1,4 @@
 library(testthat)
-library(syllabify)
+library(syllabifyr)
 
-test_check("syllabify")
+test_check("syllabifyr")

@@ -15,7 +15,7 @@ install_github("patrickreidy/textgRid")
 
 ## ------------------------------------------------------------------------
 library(textgRid)
-library(syllabify)
+library(syllabifyr)
 library(dplyr)
 library(purrr)
 library(tidyr)

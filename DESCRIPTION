@@ -1,4 +1,4 @@
-Package: syllabify
+Package: syllabifyr
 Type: Package
 Title: Syllabifies CMU Entries
 Version: 0.1.0

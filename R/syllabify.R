@@ -48,7 +48,8 @@ syllabify <- function(pron, alaska_rule = T){
     mutate(syll = as.numeric(!!syll)) %>%
     group_by(syll) %>%
     mutate(stress = gsub(".*([0-9])", "\\1", !!phone),
-           stress = case_when(stress %in% c("0", "1", "2") ~ stress)) %>%
+           stress = case_when(stress %in% c("0", "1", "2") ~ stress),
+           phone = gsub("[0-9]", "", !!phone)) %>%
     fill(stress) %>%
     fill(stress, .direction = "up") %>%
     ungroup()

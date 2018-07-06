@@ -144,7 +144,8 @@ syllabify_list <- function(pron, alaska_rule = TRUE){
           two_onset <- map(O2, ~all(tail(onsets[[i]], 2) %in% .x)) %>%
                             simplify()
           if (any(two_onset)){
-            three_onset <- map(O3, ~all(tail(onsets[[i]], 3) %in% .x)) %>% simplify()
+            three_onset <- map(O3, ~all(tail(onsets[[i]], 3) %in% .x)) %>%
+                                simplify()
             depth <- ifelse(any(three_onset), 3, 2)
           }
         }

@@ -28,14 +28,14 @@ You can install syllabify from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("JoFrhwld/syllabify")
+devtools::install_github("JoFrhwld/syllabifyr")
 ```
 
 ## Example
 
 
 ```{r example}
-library(syllabify)
+library(syllabifyr)
 syllabify("AO0 S T R EY1 L Y AH0")
 syllabify(c("AO0", "S", "T", "R", "EY1", "L", "Y", "AH0"))
 ```

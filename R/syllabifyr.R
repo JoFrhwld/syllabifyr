@@ -2,7 +2,6 @@
 #'
 #' This is a package to do tidy syllabification of phonetic transcriptions.
 #'
-#' @section Functions
 #'
 #' The key function is \code{syllabify()}. Given a CMU transcription,
 #' it will return a tibble.

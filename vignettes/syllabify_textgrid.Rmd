@@ -43,7 +43,7 @@ library(tidyr)
 I read a brief word list based on the examples from Turton (2017), who was studying /l/ darkening. I then transcribed and force aligned it. We can read it in as a data frame like so:
 
 ```{r}
-tg_path <- system.file("extdata", "l_reading.TextGrid", package = "syllabify")
+tg_path <- system.file("extdata", "l_reading.TextGrid", package = "syllabifyr")
 tg_df <- as.data.frame(TextGrid(tg_path))
 head(tg_df)
 ```

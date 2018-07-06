@@ -81,7 +81,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
                  <span class="dt">repos =</span> <span class="st">&quot;https://cloud.r-project.org/&quot;</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T//RtmpF3zRzC/downloaded_packages</span></code></pre></div>
+<span class="co">#&gt;  /var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T//RtmpYdK7FV/downloaded_packages</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&quot;patrickreidy/textgRid&quot;</span>)
 <span class="co">#&gt; Downloading GitHub repo patrickreidy/textgRid@master</span>
@@ -89,7 +89,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt; Installing textgRid</span>
 <span class="co">#&gt; '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \</span>
 <span class="co">#&gt;   --no-environ --no-save --no-restore --quiet CMD INSTALL  \</span>
-<span class="co">#&gt;   '/private/var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T/RtmpF3zRzC/devtoolse8c5d6b2461/patrickreidy-textgRid-dd151e5'  \</span>
+<span class="co">#&gt;   '/private/var/folders/gm/db_n6gxj09g4ygb8plhz58kw0000gn/T/RtmpYdK7FV/devtoolsf6b230e42d55/patrickreidy-textgRid-dd151e5'  \</span>
 <span class="co">#&gt;   --library='/Library/Frameworks/R.framework/Versions/3.5/Resources/library'  \</span>
 <span class="co">#&gt;   --install-tests</span>
 <span class="co">#&gt; </span></code></pre></div>
@@ -107,7 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(purrr)
 <span class="kw">library</span>(tidyr)</code></pre></div>
 <p>I read a brief word list based on the examples from Turton (2017), who was studying /l/ darkening. I then transcribed and force aligned it. We can read it in as a data frame like so:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tg_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;l_reading.TextGrid&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;syllabify&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tg_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;l_reading.TextGrid&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;syllabifyr&quot;</span>)
 tg_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">TextGrid</span>(tg_path))
 <span class="kw">head</span>(tg_df)
 <span class="co">#&gt;   TierNumber                TierName     TierType Index StartTime EndTime</span>
@@ -252,26 +252,6 @@ word_tier &lt;-<span class="st"> </span>tg_df <span class="op">%&gt;%</span><spa
                          syll_df,
                          bind_cols))<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unnest</span>(joined)
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
-<span class="co">#&gt; Warning in evalq(as.numeric(~phone), &lt;environment&gt;): NAs introduced by</span>
-<span class="co">#&gt; coercion</span>
 
 <span class="kw">head</span>(syllabified)
 <span class="co">#&gt; # A tibble: 6 x 18</span>
@@ -296,14 +276,14 @@ word_tier &lt;-<span class="st"> </span>tg_df <span class="op">%&gt;%</span><spa
 <span class="co">#&gt; # A tibble: 8 x 7</span>
 <span class="co">#&gt;   word    phone position part  stress  syll next_phone</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;     </span>
-<span class="co">#&gt; 1 LEAP    L     initial  onset 1         NA IY1       </span>
-<span class="co">#&gt; 2 BELIEVE L     internal onset 0         NA IY1       </span>
-<span class="co">#&gt; 3 FREELY  L     internal onset 1         NA IY0       </span>
-<span class="co">#&gt; 4 HELIX   L     internal onset 1         NA IH0       </span>
-<span class="co">#&gt; 5 HEALING L     internal onset 1         NA IH0       </span>
-<span class="co">#&gt; 6 HEAL    L     final    coda  1         NA sp        </span>
-<span class="co">#&gt; 7 HEAL    L     final    coda  1         NA AH0       </span>
-<span class="co">#&gt; 8 PEEL    L     final    coda  1         NA B</span></code></pre></div>
+<span class="co">#&gt; 1 LEAP    L     initial  onset 1          1 IY1       </span>
+<span class="co">#&gt; 2 BELIEVE L     internal onset 1          2 IY1       </span>
+<span class="co">#&gt; 3 FREELY  L     internal onset 0          2 IY0       </span>
+<span class="co">#&gt; 4 HELIX   L     internal onset 0          2 IH0       </span>
+<span class="co">#&gt; 5 HEALING L     internal onset 0          2 IH0       </span>
+<span class="co">#&gt; 6 HEAL    L     final    coda  1          1 sp        </span>
+<span class="co">#&gt; 7 HEAL    L     final    coda  1          1 AH0       </span>
+<span class="co">#&gt; 8 PEEL    L     final    coda  1          1 B</span></code></pre></div>
 <hr />
 <p>Turton, D 2017 Categorical or gradient? An ultrasound investigation of /l/-darkening and vocalization in varieties of English. Laboratory Phonology: Journal of the Association for Laboratory Phonology 8(1): 13, pp. 1–31, DOI: <a href="https://doi.org/10.5334/labphon.35" class="uri">https://doi.org/10.5334/labphon.35</a></p>
 </div>

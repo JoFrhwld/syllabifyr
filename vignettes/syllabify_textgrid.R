@@ -21,7 +21,7 @@ library(purrr)
 library(tidyr)
 
 ## ------------------------------------------------------------------------
-tg_path <- system.file("extdata", "l_reading.TextGrid", package = "syllabify")
+tg_path <- system.file("extdata", "l_reading.TextGrid", package = "syllabifyr")
 tg_df <- as.data.frame(TextGrid(tg_path))
 head(tg_df)
 

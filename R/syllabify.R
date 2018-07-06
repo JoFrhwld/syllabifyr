@@ -36,7 +36,7 @@
 syllabify <- function(pron, alaska_rule = T){
   syll_list <- syllabify_list(pron, alaska_rule)
   phone <- quo(phone)
-  syll <- quo(phone)
+  syll <- quo(syll)
   stress <- quo(stress)
   nsyl <- length(syll_list)
   output <- syll_list %>%

@@ -3,7 +3,7 @@
 syllabifyr <img src="man/figures/logo.png" align="right" />
 ===========================================================
 
-[![Travis-CI Build Status](https://travis-ci.org/JoFrhwld/syllabify.svg?branch=master)](https://travis-ci.org/JoFrhwld/syllabify)
+[![Travis-CI Build Status](https://travis-ci.org/JoFrhwld/syllabifyr.svg?branch=master)](https://travis-ci.org/JoFrhwld/syllabifyr)
 
 The goal of syllabify is to provide tidy syllabification of phonetic transcriptions. So far, only CMU dict transcriptions are supported.
 

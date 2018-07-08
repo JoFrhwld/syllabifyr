@@ -4,7 +4,7 @@ Title: Syllabifier for CMU Dictionary Transcriptions
 Version: 0.1.0
 Author: Josef Fruehwald
 Maintainer: Josef Fruehwald <jofrhwld@gmail.com>
-Description: Implements tidy syllabificiation of transcription. 
+Description: Implements tidy syllabification of transcription. 
   Based on @kylebgorman's python implementation <https://github.com/kylebgorman/syllabify>.
 Encoding: UTF-8
 LazyData: true

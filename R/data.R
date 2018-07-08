@@ -2,7 +2,7 @@
 #' @name syllabify_test_dict
 #' @description
 #' \describe{
-#'   \item{trans}{cmu transcription}
+#'   \item{trans}{CMU ranscription}
 #'   \item{word}{word}
 #' }
 #' @keywords internal

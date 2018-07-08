@@ -9,7 +9,7 @@
 #' @return Returns a data frame with the following columns
 #' \describe{
 #'   \item{syll}{A numeric index for each syllable}
-#'   \item{part}{What part of the syllable each phone blongs to}
+#'   \item{part}{What part of the syllable each phone belongs to}
 #'   \item{phone}{The phone label from the transcription}
 #'   \item{stress}{The syllable stress}
 #' }
@@ -67,7 +67,7 @@ syllabify <- function(pron, alaska_rule = T){
 #'
 #' @return A with one value per syllable. Each value is a list, with three
 #' values: onset, nucleus, coda. Each will contain a vector of the phones
-#' which belong to each consitntuent part of the syllable. Any empty
+#' which belong to each consitutuent part of the syllable. Any empty
 #' constituent parts will have the value \code{character(0)}
 #'
 #' @examples
@@ -186,7 +186,7 @@ make_onset_indices <- function(nuclei_indices){
   return(output)
 }
 
-#' CMU pronunciaton check
+#' CMU pronunciation check
 #' @importFrom stringr str_split
 #' @keywords internal
 

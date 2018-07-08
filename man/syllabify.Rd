@@ -16,7 +16,7 @@ or a string with labels separated by spaces}
 Returns a data frame with the following columns
 \describe{
   \item{syll}{A numeric index for each syllable}
-  \item{part}{What part of the syllable each phone blongs to}
+  \item{part}{What part of the syllable each phone belongs to}
   \item{phone}{The phone label from the transcription}
   \item{stress}{The syllable stress}
 }

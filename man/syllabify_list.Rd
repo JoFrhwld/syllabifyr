@@ -15,7 +15,7 @@ or a string with labels separated by spaces}
 \value{
 A with one value per syllable. Each value is a list, with three
 values: onset, nucleus, coda. Each will contain a vector of the phones
-which belong to each consitntuent part of the syllable. Any empty
+which belong to each consitutuent part of the syllable. Any empty
 constituent parts will have the value \code{character(0)}
 }
 \description{

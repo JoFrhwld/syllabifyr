@@ -5,7 +5,7 @@
 \title{syllabify test dict}
 \description{
 \describe{
-  \item{trans}{cmu transcription}
+  \item{trans}{CMU ranscription}
   \item{word}{word}
 }
 }

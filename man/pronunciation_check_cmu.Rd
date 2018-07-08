@@ -2,11 +2,11 @@
 % Please edit documentation in R/syllabify.R
 \name{pronunciation_check_cmu}
 \alias{pronunciation_check_cmu}
-\title{CMU pronunciaton check}
+\title{CMU pronunciation check}
 \usage{
 pronunciation_check_cmu(pron)
 }
 \description{
-CMU pronunciaton check
+CMU pronunciation check
 }
 \keyword{internal}

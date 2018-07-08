@@ -7,7 +7,7 @@
 \title{Syllabify: A package for doing tidy syllabification}
 \description{
 This is a package to do tidy syllabification of phonetic transcriptions.
-The syllabifyer "maximizes onset".
+The syllabifier "maximizes onset".
 The algorithmic approach to this is adapted from Kyle Gorman's python implementation
 (\url{https://github.com/kylebgorman/syllabify})
 }

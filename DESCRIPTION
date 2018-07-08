@@ -1,6 +1,6 @@
 Package: syllabifyr
 Type: Package
-Title: Syllabifies CMU Entries
+Title: Syllabifier for CMU Dictionary Transcriptions
 Version: 0.1.0
 Author: Josef Fruehwald
 Maintainer: Josef Fruehwald <jofrhwld@gmail.com>

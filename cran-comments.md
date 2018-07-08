@@ -1,7 +1,7 @@
 ## Test environments
 * local OS X install, R 3.5.0
 * ubuntu 12.04 (on travis-ci), R 3.5.0
-* (win-builder (devel and release))
+* win-builder (devel and release)
 
 ## R CMD check results
 
@@ -16,5 +16,6 @@ This is a new release, so there are no reverse dependencies.
 ---
 
 There is a cran package called sylCount, and an archived package 
-called syllable. These packages operate on different principles,
-and serve different use cases.
+called syllable. These packages operate on different principles
+(counting syllables from normal text), and serve different 
+use cases (text complexity/readability.

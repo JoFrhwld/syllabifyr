@@ -12,7 +12,13 @@ I've largely utilized the same approach as [Kyle Gorman's python implementation]
 Installation
 ------------
 
-You can install syllabify from github with:
+`syllabifyr` is now on Cran
+
+``` r
+install.packages("syllabifyr")
+```
+
+You can also install `syllabifyr` from github with:
 
 ``` r
 # install.packages("devtools")

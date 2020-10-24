@@ -1,3 +1,13 @@
+# v0.1.1
+## Test environments
+* local macOS install, R 4.0.2
+* Ubuntu 16.04.6 (on travic-ci) R 4.0.2
+
+
+## R CMD Check results
+
+
+# v0.1.0
 ## Test environments
 * local OS X install, R 3.5.1
 * Ubuntu 14.04.5 (on travis-ci), R 3.5.0

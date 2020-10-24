@@ -2,9 +2,17 @@
 ## Test environments
 * local macOS install, R 4.0.2
 * Ubuntu 16.04.6 (on travic-ci) R 4.0.2
-
+* win-builder (devel and release)
 
 ## R CMD Check results
+
+0 errors ✓ | 0 warnings ✓ | 0 notes ✓
+
+## Reverse dependencies
+
+There are no reverse dependencies.
+
+
 
 
 # v0.1.0

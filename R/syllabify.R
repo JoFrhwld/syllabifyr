@@ -41,7 +41,7 @@ syllabify <- function(pron, alaska_rule = T){
   nsyl <- length(syll_list)
   output <- syll_list %>%
     map(~.x %>% keep(~length(.x) > 0)) %>%
-    map(~.x %>% map(~ data_frame(phone = .x))) %>%
+    map(~.x %>% map(~ tibble(phone = .x))) %>%
     set_names(seq(nsyl)) %>%
     map(~.x %>% bind_rows(.id = "part")) %>%
     dplyr::bind_rows(.id = "syll") %>%

@@ -3,7 +3,6 @@
 \docType{package}
 \name{syllabifyr}
 \alias{syllabifyr}
-\alias{syllabifyr-package}
 \title{Syllabify: A package for doing tidy syllabification}
 \description{
 This is a package to do tidy syllabification of phonetic transcriptions.

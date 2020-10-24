@@ -155,7 +155,7 @@ syllabify_list <- function(pron, alaska_rule = TRUE){
             onsets[[i]] <- onsets[[i]][-1]
           }
         }
-        codas[[i - 1]] <- coda
+        codas[[i - 1]] <- c(codas[[i-1]], coda)
       }
     }
   }

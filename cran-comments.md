@@ -1,3 +1,4 @@
+2020-10-24
 # v0.1.1
 ## Test environments
 * local macOS install, R 4.0.2
@@ -14,7 +15,7 @@ There are no reverse dependencies.
 
 
 
-
+2018-07-10
 # v0.1.0
 ## Test environments
 * local OS X install, R 3.5.1

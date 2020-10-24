@@ -1,6 +1,6 @@
 # syllabifyr 0.1.1
 
-* updated `data_frame()` to `tibble()`
+* updated `tibble::data_frame()` to `tibble::tibble()`
 
 # syllabifyr 0.1.0
 

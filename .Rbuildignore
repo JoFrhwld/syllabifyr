@@ -7,3 +7,4 @@
 ^cran-comments\.md$
 .DS_Store
 ^LICENSE\.md$
+^CRAN-RELEASE$

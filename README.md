@@ -8,6 +8,7 @@
 [![R-CMD-check](https://github.com/JoFrhwld/syllabifyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JoFrhwld/syllabifyr/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/syllabifyr.png)](https://CRAN.R-project.org/package=syllabifyr)
+[![DOI](https://zenodo.org/badge/139162633.svg)](https://zenodo.org/badge/latestdoi/139162633)
 <!-- badges: end -->
 
 The goal of `syllabifyr` is to provide tidy syllabification of phonetic

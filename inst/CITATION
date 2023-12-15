@@ -1,0 +1,9 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "syllabifyr: Syllabifier for CMU Dictionary Transcriptions",
+  author   = person(
+    given = "Josef",
+    family = "Fruehwald"
+  ),
+  year     = 2020
+)

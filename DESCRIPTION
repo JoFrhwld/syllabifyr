@@ -18,3 +18,4 @@ Imports:
    tibble, 
    tidyr
 Depends: R (>= 2.10)
+URL: https://jofrhwld.github.io/syllabifyr/

@@ -6,7 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/JoFrhwld/syllabifyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JoFrhwld/syllabifyr/actions/workflows/R-CMD-check.yaml)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/syllabifyr.png)](https://cran.r-project.org/package=syllabifyr)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/syllabifyr.png)](https://CRAN.R-project.org/package=syllabifyr)
 <!-- badges: end -->
 
 The goal of `syllabifyr` is to provide tidy syllabification of phonetic

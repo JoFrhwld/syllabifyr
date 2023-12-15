@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^CONDUCT\.md$
@@ -8,3 +10,7 @@
 .DS_Store
 ^LICENSE\.md$
 ^CRAN-RELEASE$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
